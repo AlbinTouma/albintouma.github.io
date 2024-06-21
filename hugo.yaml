@@ -12,12 +12,6 @@ module:
 #Menu
 menu:
   main:
-    - name: Insights
-      pageRef: posts/
-      weight: 1
-    - name: About
-      pageRef: /about
-      weight: 2
     - name: Search
       weight: 3
       params:

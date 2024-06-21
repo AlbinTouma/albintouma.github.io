@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon shortcut" href="/favicon.ico" sizes="32x32" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon-dark.svg" type="image/svg+xml" media="(prefers-color-scheme: dark)" />
+<link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+<link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+<link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
+
+  <title>Automate Excel with Python – Albin Touma</title>
+  <meta name="description" content="Business Problem.As an analyst I recieve monthly excel sheets from our data vendor that describes their data coverage. My job is to analyse changes in their coverage. This usually takes about a day to do, so I decided to save myself the effort with a python programme that lets anyone in the company complete this task.
+Every project needs a good definition of done, and I was able to find a good definition by thinking about what I wanted the user to achieve:" />
+  
+  
+    <link rel="canonical" href="http://localhost:1313/posts/excel/" itemprop="url" />
+  
+
+  
+
+<meta property="og:title" content="Automate Excel with Python" />
+<meta property="og:description" content="Business Problem.As an analyst I recieve monthly excel sheets from our data vendor that describes their data coverage. My job is to analyse changes in their coverage. This usually takes about a day to do, so I decided to save myself the effort with a python programme that lets anyone in the company complete this task.
+Every project needs a good definition of done, and I was able to find a good definition by thinking about what I wanted the user to achieve:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/posts/excel/" /><meta property="article:section" content="posts" />
+
+
+
+  
+  <meta itemprop="name" content="Automate Excel with Python">
+  <meta itemprop="description" content="Business Problem.As an analyst I recieve monthly excel sheets from our data vendor that describes their data coverage. My job is to analyse changes in their coverage. This usually takes about a day to do, so I decided to save myself the effort with a python programme that lets anyone in the company complete this task.
+Every project needs a good definition of done, and I was able to find a good definition by thinking about what I wanted the user to achieve:">
+  <meta itemprop="wordCount" content="2022"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Automate Excel with Python">
+<meta name="twitter:description" content="Business Problem.As an analyst I recieve monthly excel sheets from our data vendor that describes their data coverage. My job is to analyse changes in their coverage. This usually takes about a day to do, so I decided to save myself the effort with a python programme that lets anyone in the company complete this task.
+Every project needs a good definition of done, and I was able to find a good definition by thinking about what I wanted the user to achieve:">
+
+    <link href="/css/compiled/main.css" rel="stylesheet" />
+
+
+
+  <link href="/css/custom.css" rel="stylesheet" />
+
+
+
+  
+
+
+  <script>
+     
+    const defaultTheme = 'system';
+
+    const setDarkTheme = () => {
+      document.documentElement.classList.add("dark");
+      document.documentElement.style.colorScheme = "dark";
+    }
+    const setLightTheme = () => {
+      document.documentElement.classList.remove("dark");
+      document.documentElement.style.colorScheme = "light";
+    }
+
+    if ("color-theme" in localStorage) {
+      localStorage.getItem("color-theme") === "dark" ? setDarkTheme() : setLightTheme();
+    } else {
+      defaultTheme === "dark" ? setDarkTheme() : setLightTheme();
+      if (defaultTheme === "system") {
+        window.matchMedia("(prefers-color-scheme: dark)").matches ? setDarkTheme() : setLightTheme();
+      }
+    }
+  </script>
+
+  
+</head>
+<body dir="ltr"><div class="nav-container sticky top-0 z-20 w-full bg-transparent print:hidden">
+  <div class="nav-container-blur pointer-events-none absolute z-[-1] h-full w-full bg-white dark:bg-dark shadow-[0_2px_4px_rgba(0,0,0,.02),0_1px_0_rgba(0,0,0,.06)] contrast-more:shadow-[0_0_0_1px_#000] dark:shadow-[0_-1px_0_rgba(255,255,255,.1)_inset] contrast-more:dark:shadow-[0_0_0_1px_#fff]"></div>
+
+  <nav class="mx-auto flex items-center justify-end gap-2 h-16 px-6 max-w-[90rem]">
+    <a class="flex items-center hover:opacity-75 ltr:mr-auto rtl:ml-auto" href="/">
+        <img class="block dark:hidden" src="/images/logo.svg" alt="Albin Touma" height="20" width="20" />
+        <img class="hidden dark:block" src="/images/logo.svg" alt="Albin Touma" height="20" width="20" />
+        <span class="mx-2 font-extrabold inline select-none" title="Albin Touma">Albin Touma</span>
+    </a><div class="search-wrapper relative md:w-64">
+  <div class="relative flex items-center text-gray-900 contrast-more:text-gray-800 dark:text-gray-300 contrast-more:dark:text-gray-300">
+    <input
+      placeholder="Search..."
+      class="search-input block w-full appearance-none rounded-lg px-3 py-2 transition-colors text-base leading-tight md:text-sm bg-black/[.05] dark:bg-gray-50/10 focus:bg-white dark:focus:bg-dark placeholder:text-gray-500 dark:placeholder:text-gray-400 contrast-more:border contrast-more:border-current"
+      type="search"
+      value=""
+      spellcheck="false"
+    />
+    <kbd
+      class="absolute my-1.5 select-none ltr:right-1.5 rtl:left-1.5 h-5 rounded bg-white px-1.5 font-mono text-[10px] font-medium text-gray-500 border dark:border-gray-100/20 dark:bg-dark/50 contrast-more:border-current contrast-more:text-current contrast-more:dark:border-current items-center gap-1 transition-opacity pointer-events-none hidden sm:flex"
+    >
+      CTRL K
+    </kbd>
+  </div>
+
+  <div>
+    <ul
+      class="search-results hextra-scrollbar hidden border border-gray-200 bg-white text-gray-100 dark:border-neutral-800 dark:bg-neutral-900 absolute top-full z-20 mt-2 overflow-auto overscroll-contain rounded-xl py-2.5 shadow-xl max-h-[min(calc(50vh-11rem-env(safe-area-inset-bottom)),400px)] md:max-h-[min(calc(100vh-5rem-env(safe-area-inset-bottom)),400px)] inset-x-0 ltr:md:left-auto rtl:md:right-auto contrast-more:border contrast-more:border-gray-900 contrast-more:dark:border-gray-50 w-screen min-h-[100px] max-w-[min(calc(100vw-2rem),calc(100%+20rem))]"
+      style="transition: max-height 0.2s ease 0s;"
+    ></ul>
+  </div>
+</div>
+
+          <a class="p-2 text-current" target="_blank" rel="noreferer" href="https://github.com/AlbinTouma" title="GitHub"><svg height=24 fill="currentColor" viewBox="3 3 18 18">
+  <path d="M12 3C7.0275 3 3 7.12937 3 12.2276C3 16.3109 5.57625 19.7597 9.15374 20.9824C9.60374 21.0631 9.77249 20.7863 9.77249 20.5441C9.77249 20.3249 9.76125 19.5982 9.76125 18.8254C7.5 19.2522 6.915 18.2602 6.735 17.7412C6.63375 17.4759 6.19499 16.6569 5.8125 16.4378C5.4975 16.2647 5.0475 15.838 5.80124 15.8264C6.51 15.8149 7.01625 16.4954 7.18499 16.7723C7.99499 18.1679 9.28875 17.7758 9.80625 17.5335C9.885 16.9337 10.1212 16.53 10.38 16.2993C8.3775 16.0687 6.285 15.2728 6.285 11.7432C6.285 10.7397 6.63375 9.9092 7.20749 9.26326C7.1175 9.03257 6.8025 8.08674 7.2975 6.81794C7.2975 6.81794 8.05125 6.57571 9.77249 7.76377C10.4925 7.55615 11.2575 7.45234 12.0225 7.45234C12.7875 7.45234 13.5525 7.55615 14.2725 7.76377C15.9937 6.56418 16.7475 6.81794 16.7475 6.81794C17.2424 8.08674 16.9275 9.03257 16.8375 9.26326C17.4113 9.9092 17.76 10.7281 17.76 11.7432C17.76 15.2843 15.6563 16.0687 13.6537 16.2993C13.98 16.5877 14.2613 17.1414 14.2613 18.0065C14.2613 19.2407 14.25 20.2326 14.25 20.5441C14.25 20.7863 14.4188 21.0746 14.8688 20.9824C16.6554 20.364 18.2079 19.1866 19.3078 17.6162C20.4077 16.0457 20.9995 14.1611 21 12.2276C21 7.12937 16.9725 3 12 3Z"></path>
+</svg>
+<span class="sr-only">GitHub</span>
+          </a><button type="button" aria-label="Menu" class="hamburger-menu -mr-2 rounded p-2 active:bg-gray-400/20 md:hidden"><svg height=24 fill="none" viewBox="0 0 24 24" stroke="currentColor"><g><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8H20"></path></g><g><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16H20"></path></g></svg></button>
+  </nav>
+</div>
+
+  <div class='mx-auto flex max-w-screen-xl'>
+    <div class="mobile-menu-overlay [transition:background-color_1.5s_ease] fixed inset-0 z-10 bg-black/80 dark:bg-black/60 hidden"></div>
+<aside class="sidebar-container flex flex-col print:hidden md:top-16 md:shrink-0 md:w-64 md:self-start max-md:[transform:translate3d(0,-100%,0)] md:hidden xl:block">
+  
+  <div class="px-4 pt-4 md:hidden">
+    <div class="search-wrapper relative md:w-64">
+  <div class="relative flex items-center text-gray-900 contrast-more:text-gray-800 dark:text-gray-300 contrast-more:dark:text-gray-300">
+    <input
+      placeholder="Search..."
+      class="search-input block w-full appearance-none rounded-lg px-3 py-2 transition-colors text-base leading-tight md:text-sm bg-black/[.05] dark:bg-gray-50/10 focus:bg-white dark:focus:bg-dark placeholder:text-gray-500 dark:placeholder:text-gray-400 contrast-more:border contrast-more:border-current"
+      type="search"
+      value=""
+      spellcheck="false"
+    />
+    <kbd
+      class="absolute my-1.5 select-none ltr:right-1.5 rtl:left-1.5 h-5 rounded bg-white px-1.5 font-mono text-[10px] font-medium text-gray-500 border dark:border-gray-100/20 dark:bg-dark/50 contrast-more:border-current contrast-more:text-current contrast-more:dark:border-current items-center gap-1 transition-opacity pointer-events-none hidden sm:flex"
+    >
+      CTRL K
+    </kbd>
+  </div>
+
+  <div>
+    <ul
+      class="search-results hextra-scrollbar hidden border border-gray-200 bg-white text-gray-100 dark:border-neutral-800 dark:bg-neutral-900 absolute top-full z-20 mt-2 overflow-auto overscroll-contain rounded-xl py-2.5 shadow-xl max-h-[min(calc(50vh-11rem-env(safe-area-inset-bottom)),400px)] md:max-h-[min(calc(100vh-5rem-env(safe-area-inset-bottom)),400px)] inset-x-0 ltr:md:left-auto rtl:md:right-auto contrast-more:border contrast-more:border-gray-900 contrast-more:dark:border-gray-50 w-screen min-h-[100px] max-w-[min(calc(100vw-2rem),calc(100%+20rem))]"
+      style="transition: max-height 0.2s ease 0s;"
+    ></ul>
+  </div>
+</div>
+
+  </div>
+  <div class="hextra-scrollbar overflow-y-auto overflow-x-hidden p-4 grow md:h-[calc(100vh-var(--navbar-height)-var(--menu-height))]">
+    <ul class="flex flex-col gap-1 md:hidden">
+      
+      
+          <li class="open"><a
+    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
+    href="/posts/"
+    
+  >Posts
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg></span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class='relative flex flex-col gap-1 before:absolute before:inset-y-1 before:w-px before:bg-gray-200 before:content-[""] ltr:ml-3 ltr:pl-3 ltr:before:left-0 rtl:mr-3 rtl:pr-3 rtl:before:right-0 dark:before:bg-neutral-800'><li class="flex flex-col open"><a
+    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      sidebar-active-item bg-primary-100 font-semibold text-primary-800 contrast-more:border contrast-more:border-primary-500 dark:bg-primary-400/10 dark:text-primary-600 contrast-more:dark:border-primary-500"
+    href="/posts/excel/"
+    
+  >Automate Excel with Python
+    </a>
+  
+    <ul class='flex flex-col gap-1 relative before:absolute before:inset-y-1 before:w-px before:bg-gray-200 before:content-[""] dark:before:bg-neutral-800 ltr:pl-3 ltr:before:left-0 rtl:pr-3 rtl:before:right-0 ltr:ml-3 rtl:mr-3'><li>
+              <a
+                href="#"
+                class="flex rounded px-2 py-1.5 text-sm transition-colors [word-break:break-word] cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:border gap-2 before:opacity-25 before:content-['#'] text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:text-gray-900 contrast-more:dark:text-gray-50 contrast-more:border-transparent contrast-more:hover:border-gray-900 contrast-more:dark:hover:border-gray-50"
+              ></a>
+            </li>
+          <li>
+              <a
+                href="#objective-1-score-excel-files-and-save-output"
+                class="flex rounded px-2 py-1.5 text-sm transition-colors [word-break:break-word] cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:border gap-2 before:opacity-25 before:content-['#'] text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:text-gray-900 contrast-more:dark:text-gray-50 contrast-more:border-transparent contrast-more:hover:border-gray-900 contrast-more:dark:hover:border-gray-50"
+              >Objective 1: Score Excel files and save output</a>
+            </li>
+          <li>
+              <a
+                href="#objective-2-compare-files-and-write-changes-to-a-log"
+                class="flex rounded px-2 py-1.5 text-sm transition-colors [word-break:break-word] cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:border gap-2 before:opacity-25 before:content-['#'] text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:text-gray-900 contrast-more:dark:text-gray-50 contrast-more:border-transparent contrast-more:hover:border-gray-900 contrast-more:dark:hover:border-gray-50"
+              >Objective 2: Compare files and write changes to a log</a>
+            </li>
+          <li>
+              <a
+                href="#from-business-problem-to-solution"
+                class="flex rounded px-2 py-1.5 text-sm transition-colors [word-break:break-word] cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:border gap-2 before:opacity-25 before:content-['#'] text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:text-gray-900 contrast-more:dark:text-gray-50 contrast-more:border-transparent contrast-more:hover:border-gray-900 contrast-more:dark:hover:border-gray-50"
+              >From business problem to solution</a>
+            </li>
+          </ul>
+  
+              
+            </li><li class="flex flex-col "><a
+    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
+    href="/posts/enrichment/"
+    
+  >What are British MPs financial interests? A case study in enriching PEP data
+    </a>
+              
+            </li></ul>
+      </div></li>
+    </ul>
+
+    <div class="max-xl:hidden h-0 w-64 shrink-0"></div></div>
+  
+  
+    <div class="md:hidden  sticky bottom-0 bg-white dark:bg-dark mx-4 py-4 shadow-[0_-12px_16px_#fff] flex items-center gap-2 dark:border-neutral-800 dark:shadow-[0_-12px_16px_#111] contrast-more:border-neutral-400 contrast-more:shadow-none contrast-more:dark:shadow-none border-t" data-toggle-animation="show"><div class="flex grow flex-col"><button
+  title="Change theme"
+  data-theme="light"
+  class="theme-toggle group h-7 rounded-md px-2 text-left text-xs font-medium text-gray-600 transition-colors dark:text-gray-400 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-primary-100/5 dark:hover:text-gray-50"
+  type="button"
+  aria-label="Change theme"
+>
+  <div class="flex items-center gap-2 capitalize"><svg height=12 class="group-data-[theme=light]:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg><span class="group-data-[theme=light]:hidden">Light</span><svg height=12 class="group-data-[theme=dark]:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg><span class="group-data-[theme=dark]:hidden">Dark</span></div>
+</button>
+</div></div></aside>
+    
+<nav class="hextra-toc order-last hidden w-64 shrink-0 xl:block print:hidden px-4" aria-label="table of contents">
+    <div class="hextra-scrollbar sticky top-16 overflow-y-auto pr-4 pt-6 text-sm [hyphens:auto] max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] ltr:-mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="ltr:pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#how-excel-let-us-down">How Excel let us down
+        </a>
+      </li></ul><ul>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#objective-1-score-excel-files-and-save-output">Objective 1: Score Excel files and save output
+        </a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="ltr:pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#1-load-data">1) Load data
+        </a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="ltr:pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#2-extract-date">2) Extract date
+        </a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="ltr:pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#3-score-excel-sheet">3) Score Excel Sheet
+        </a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#objective-2-compare-files-and-write-changes-to-a-log">Objective 2: Compare files and write changes to a log
+        </a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="ltr:pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#compare-files-and-log-changes">Compare files and log changes
+        </a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#from-business-problem-to-solution">From business problem to solution
+        </a>
+      </li></ul>
+      <div class="mt-8 border-t bg-white pt-8 shadow-[0_-12px_16px_white] dark:bg-dark dark:shadow-[0_-12px_16px_#111] sticky bottom-0 flex flex-col items-start gap-2 pb-8 dark:border-neutral-800 contrast-more:border-t contrast-more:border-neutral-400 contrast-more:shadow-none contrast-more:dark:border-neutral-400">
+        <button aria-hidden="true" id="backToTop" onClick="scrollUp();" class="transition-all transition duration-75 opacity-0 text-xs font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 contrast-more:text-gray-800 contrast-more:dark:text-gray-50">
+          <span>Scroll to top</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline ml-1 h-3.5 w-3.5 border rounded-full border-gray-500 hover:border-gray-900 dark:border-gray-400 dark:hover:border-gray-100 contrast-more:border-gray-800 contrast-more:dark:border-gray-50">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+
+    <article class="w-full break-words flex min-h-[calc(100vh-var(--navbar-height))] min-w-0 justify-center pb-8 pr-[calc(env(safe-area-inset-right)-1.5rem)]">
+      <main class="w-full min-w-0 max-w-6xl px-6 pt-4 md:px-12">
+        <br class="mt-1.5 text-sm" />
+        <h1 class="text-center mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">Automate Excel with Python</h1>
+        <div class="mb-16"></div>
+        <div class="content">
+          <h1>Business Problem.</h1><p>As an analyst I recieve monthly excel sheets from our data vendor that describes their data coverage. My job is to analyse changes in their coverage. This usually takes about a day to do, so I decided to save myself the effort with a python programme that lets anyone in the company complete this task.</p>
+<p>Every project needs a good definition of done, and I was able to find a good definition by thinking about what I wanted the user to achieve:</p>
+<blockquote>
+<p>&ldquo;..the user should load the file, run the programme, and then see a heatmap of our vendor&rsquo;s data coverage and a list of changes in coverage compared to last month&rsquo;s file.&rdquo;</p>
+</blockquote>
+<p>Done is then when the python programme:</p>
+<ol>
+<li>Scores the input coverage Excel sheet and saves the output as a heatmap</li>
+<li>Compares the heatmap to the previous month&rsquo;s heatmap and logs any differences</li>
+</ol>
+<h3>How Excel let us down<span class="absolute -mt-20" id="how-excel-let-us-down"></span>
+    <a href="#how-excel-let-us-down" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Picture this: each month, the data vendor sends you a file of their current data coverage. Our product is based on this data, so it&rsquo;s crucial that engineers, sales, and product owners know about any updates with speed and high accuracy.</p>
+<p>Knowing about our new officer data in France before that morning coffee with a potential client can really be the difference between deal and no deal, and with Excel, we risked no deal.</p>
+<p>The reason why is because the task of manually scoring and comparing files was too tedious. Not only that, Excel would often crash.</p>
+<p>Scoring the sheets required long if statements and XLOOKUP formulas that often broke down when trying to transfer scores from the data vendor&rsquo;s list of countries and states to our internal list of all the world&rsquo;s countries and states.</p>
+<p>If that doesn&rsquo;t sound bad, wait until you hear about the next step. To find changes, you had to copy the last months&rsquo; results and paste it into this months&rsquo; sheet. Then, you had to compare cells to identify differences before filtering booleans to find changes. Not only was this prone to human error, there was never the time to compare multiple months at once.</p>
+<p>As soon as you tried lookups or any other solution in to speed up the process, Excel would simply crash.</p>
+<p>With Python, I increased the efficiency and accuracy of comparing our data vendor&rsquo;s coverage sheets and transformed the process from a complicated set of tasks to a programme that anyone in the company can run with a simply &lsquo;python main.py&rsquo; in the command line.</p>
+<h1>Python Solution</h1><p>The structure of the programme is simple. We have three directories. One folder where we store our scripts, a <em>data input</em> folder for the Excel files from our data vendor, and an <em>output folder</em> where we store the scored Excel files and our changes log.</p>
+<p>The a main.py file runs each task of our programme. Each task is its own python file. This helps us break down different problems and keep our code organised.</p>
+<p>Our main.py loads both the Excel files from our data vendor and the processed files in order to score and compare sheets.</p>
+<div class="code-block relative mt-6 first:mt-0 group/code"><div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">main</span><span class="o">.</span><span class="n">py</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Load Excel files from input directory and load output_files</span>
+</span></span><span class="line"><span class="cl"><span class="n">input_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">input_directory</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.xlsx&#39;</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl"><span class="n">output_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output_coverage_sheets_directory</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.xlsx&#39;</span><span class="p">)]</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+    <button
+      class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+      title="Copy code"
+    >
+      <div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4"></div>
+      <div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4"></div>
+    </button>
+  </div>
+</div>
+<h2>Objective 1: Score Excel files and save output<span class="absolute -mt-20" id="objective-1-score-excel-files-and-save-output"></span>
+    <a href="#objective-1-score-excel-files-and-save-output" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Cleaning and scoring the vendor&rsquo;s data files is our first step. Our for loop applies the different steps in the process to each file.</p>
+<div class="code-block relative mt-6 first:mt-0 group/code"><div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">main</span><span class="o">.</span><span class="n">py</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Loop through the input directory and score each OC coverage sheet.</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">input_file</span> <span class="ow">in</span> <span class="n">input_files</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">input_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">input_directory</span><span class="p">,</span> <span class="n">input_file</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">data</span> <span class="o">=</span> <span class="n">load_input</span><span class="p">(</span><span class="n">input_file_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">file_date</span> <span class="o">=</span> <span class="n">extract_date</span><span class="p">(</span><span class="n">input_file_path</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">oc_coverage</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">file_date</span><span class="p">)</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+    <button
+      class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+      title="Copy code"
+    >
+      <div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4"></div>
+      <div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4"></div>
+    </button>
+  </div>
+</div>
+<h3>1) Load data<span class="absolute -mt-20" id="1-load-data"></span>
+    <a href="#1-load-data" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>The loop begins by saving the path of each file and passing the path to our load_data function.</p>
+<div class="code-block relative mt-6 first:mt-0 group/code"><div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">load_files</span><span class="o">.</span><span class="n">py</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">load_input</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;Coverage Overview&#39;</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">data</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+    <button
+      class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+      title="Copy code"
+    >
+      <div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4"></div>
+      <div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4"></div>
+    </button>
+  </div>
+</div>
+<h3>2) Extract date<span class="absolute -mt-20" id="2-extract-date"></span>
+    <a href="#2-extract-date" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>After loading the data, we extract the date when the file was last updated by the vendor so that we can organise the Excel sheets and identify any changes in their data.</p>
+<p>We find when the last file was last updated at C2. To extract this date,  we call  the extract_date function.</p>
+<div class="code-block relative mt-6 first:mt-0 group/code"><div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">file_date</span><span class="o">.</span><span class="n">py</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">extract_date</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">workbook</span> <span class="o">=</span> <span class="n">load_workbook</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">file_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sheet</span> <span class="o">=</span> <span class="n">workbook</span><span class="p">[</span><span class="s1">&#39;Coverage Overview&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">date</span> <span class="o">=</span> <span class="n">sheet</span><span class="p">[</span><span class="s1">&#39;C1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+</span></span><span class="line"><span class="cl">    <span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="s2">&#34;</span><span class="si">%d</span><span class="s2">th %B %Y&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">date</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">%d</span><span class="s2">th-%B-%Y&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">date</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+    <button
+      class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+      title="Copy code"
+    >
+      <div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4"></div>
+      <div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4"></div>
+    </button>
+  </div>
+</div>
+<p>The extract_date function loads the workbook and sheet where the date is found and saves the date as dd-mm-yy.</p>
+<h3>3) Score Excel Sheet<span class="absolute -mt-20" id="3-score-excel-sheet"></span>
+    <a href="#3-score-excel-sheet" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Now that we&rsquo;ve extracted both the data and the last updated date, we can call the oc_coverage function. This function cleans, scores, and saves the output of the Excel files as heatmaps organised by month in the output folder.</p>
+<p>We first remove unwanted columns; these are the blank columns containing Unnamed. Columns refering to the freshness of data is converted by mapping the categorical data to corresponding values in our freshness_dictionary. We keep a copy of this dictionary in our lookup folder where we also keep a list of all of the states and countries in the world.</p>
+<p>The next step is to score the data. We assign 10 where there is firmographic and officer data and 0 where no data exists. The result is a dataframe with converted freshness and scores showing the states and countries where our vendor has firmograhpic and officer data.</p>
+<p>Once scored, we import our csv with the world&rsquo;s countries and states and perform an outer merge on our data frame and fill na values with 0.</p>
+<div class="code-block relative mt-6 first:mt-0 group/code"><div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">oc_coverage</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">date</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">date</span> <span class="o">=</span> <span class="n">date</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Import data &amp; remove empty columns</span>
+</span></span><span class="line"><span class="cl">    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="o">~</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s1">&#39;Unnamed&#39;</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   <span class="c1"># Convert freshness columns to integers</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Cadence (Updated to OC)&#39;</span><span class="p">,</span> <span class="s1">&#39;Cadence (Incorporation to OC Entry)&#39;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">freshness_dictionary</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Compute and map freshness id to Freshness dictionary</span>
+</span></span><span class="line"><span class="cl">    <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Freshness&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Cadence (Incorporation to OC Entry)&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Cadence (Updated to OC)&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Freshness&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Freshness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">freshness_dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Score firmographic and officer</span>
+</span></span><span class="line"><span class="cl">    <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Firmographic&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="mi">10</span> <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Legal name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s1">&#39;Officer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;Officer Count&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;No Officers&#39;</span> <span class="k">else</span> <span class="mi">10</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Select only the relevant columns</span>
+</span></span><span class="line"><span class="cl">    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="s1">&#39;Jurisdiction&#39;</span><span class="p">,</span> <span class="s1">&#39;Freshness&#39;</span><span class="p">,</span> <span class="s1">&#39;Firmographic&#39;</span><span class="p">,</span> <span class="s1">&#39;Officer&#39;</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Import jurisdictions lookup table and merge data with lookup table</span>
+</span></span><span class="line"><span class="cl">    <span class="n">jurisdiction_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;scripts/lookup/template_jurisdictions.csv&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">oc_coverage</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">jurisdiction_table</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;Jurisdiction&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Assign na values for fresshness, officer, and firmographics</span>
+</span></span><span class="line"><span class="cl">    <span class="n">oc_coverage</span><span class="p">[</span><span class="s1">&#39;Freshness&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">oc_coverage</span><span class="p">[</span><span class="s1">&#39;Freshness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="k">lambda</span> <span class="n">value</span><span class="p">:</span> <span class="s1">&#39;Not Covered&#39;</span> <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">else</span> <span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">oc_coverage</span><span class="p">[[</span><span class="s1">&#39;Firmographic&#39;</span><span class="p">,</span> <span class="s1">&#39;Officer&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">oc_coverage</span><span class="p">[[</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;Firmographic&#39;</span><span class="p">,</span> <span class="s1">&#39;Officer&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Export coverage sheet as excel file and append date of file to the name. </span>
+</span></span><span class="line"><span class="cl">    <span class="n">excel_file_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;./output/coverage_sheets/</span><span class="si">{</span><span class="n">date</span><span class="si">}</span><span class="s1">.xlsx&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">oc_coverage</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">excel_file_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+    <button
+      class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+      title="Copy code"
+    >
+      <div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4"></div>
+      <div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4"></div>
+    </button>
+  </div>
+</div>
+<p>The result of merging the data frames is a heatmap of the countries in the world where our data vendor has data. We then save this heatmap in our output directory and append the date when the file was last updated to the name of the file.</p>
+<p>Inscoring the Excel sheets, we&rsquo;ve loaded the data, extracted the date, scored the files and saved the output of each file as heatmaps that can be organised by the date when they were last updated. This completes the first task of the programme.</p>
+<p>The next step is to let the user compare different months and see the latest changes in our vendor&rsquo;s data.</p>
+<h2>Objective 2: Compare files and write changes to a log<span class="absolute -mt-20" id="objective-2-compare-files-and-write-changes-to-a-log"></span>
+    <a href="#objective-2-compare-files-and-write-changes-to-a-log" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>The second step is to compare the heatmaps and identify any differences between the latest update from our data vendor and last month&rsquo;s file. In our main.py file, we loop through our heatmaps stored in our output directory.</p>
+<p>The loop below loads the output files and adds the date when they were last updated as a column to each file before appending the files to a list.</p>
+<div class="code-block relative mt-6 first:mt-0 group/code"><div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="n">merged_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Loop through the output directory to compare each OC coverage sheet</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">output_file</span> <span class="ow">in</span> <span class="n">output_files</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output_coverage_sheets_directory</span><span class="p">,</span> <span class="n">output_file</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output_data</span> <span class="o">=</span> <span class="n">load_output</span><span class="p">(</span><span class="n">output_file_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output_data</span> <span class="o">=</span> <span class="n">add_date_columns</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="n">output_data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">output_data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">merged_data</span> <span class="o">=</span> <span class="n">merge_dfs</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">change_log</span><span class="p">(</span><span class="n">merged_data</span><span class="p">)</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+    <button
+      class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+      title="Copy code"
+    >
+      <div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4"></div>
+      <div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4"></div>
+    </button>
+  </div>
+</div>
+<p>The heatmap files no longer have cell C3 where the date used to be, so we extract it from the name of the file instead by calling the add_date_columns function.</p>
+<div class="code-block relative mt-6 first:mt-0 group/code"><div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">file_date</span><span class="o">.</span><span class="n">py</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#Takes the date in the heatmap filename and populates a column in heatmap with this date. </span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">add_date_columns</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="n">output_data</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">filename_date_str</span> <span class="o">=</span> <span class="n">output_file</span>
+</span></span><span class="line"><span class="cl">    <span class="n">filename_date</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">filename_date_str</span><span class="p">,</span> <span class="n">fuzzy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">month_name</span> <span class="o">=</span> <span class="n">filename_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%b&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output_data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">month_name</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">output_data</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+    <button
+      class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+      title="Copy code"
+    >
+      <div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4"></div>
+      <div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4"></div>
+    </button>
+  </div>
+</div>
+<p>The add_date_columns function takes the date in the heatmap&rsquo;s filename and uses the date to populate a column in the heatmap. This is useful because we&rsquo;ll merge the files to create a big datafraem and the dates will act as a unique identifier.</p>
+<p>The main.py then passes the list of files to our merger function, which essentially selects relevant columns and performs an outer merge on those columns.</p>
+<div class="code-block relative mt-6 first:mt-0 group/code"><div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">merge</span><span class="o">.</span><span class="n">py</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#Merge all of the OC heatmaps</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">merge_dfs</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">merge_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Jurisdiction&#39;</span><span class="p">,</span> <span class="s1">&#39;Country&#39;</span><span class="p">,</span> <span class="s1">&#39;Firmographic&#39;</span><span class="p">,</span> <span class="s1">&#39;Officer&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                     <span class="s1">&#39;Freshness&#39;</span><span class="p">,</span> <span class="s1">&#39;Category&#39;</span><span class="p">,</span> <span class="s1">&#39;ISO_2&#39;</span><span class="p">,</span> <span class="s1">&#39;iso_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Region&#39;</span><span class="p">,</span> <span class="s1">&#39;Date&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">merged_data</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="n">merge_columns</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">),</span> <span class="n">files</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">merged_data</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+    <button
+      class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+      title="Copy code"
+    >
+      <div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4"></div>
+      <div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4"></div>
+    </button>
+  </div>
+</div>
+<p>With the returned dataframe called merged_data, we can call our function change_log in main.py to compare heatmaps and register changes in a log.</p>
+<h3>Compare files and log changes<span class="absolute -mt-20" id="compare-files-and-log-changes"></span>
+    <a href="#compare-files-and-log-changes" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>The change_log function compares the different heatmaps and logs changes by month and in a mster_change log that contains changes across all months.</p>
+<p>The function starts by creating a pivot table from the merged data frames. It then pivots the table by date. The result is a multi-indexed dataframe with hierarchical data.</p>
+<p>We then create variables to compare the months; column 0 is always the value of the latest month and column 1 is the value of the second month we want to compare.</p>
+<p>With these variables, we can compare the months. If it is true that firmographic 1 is the same as firmographi2, then True is inserted into the no change column. The same goes for all columns.</p>
+<div class="code-block relative mt-6 first:mt-0 group/code"><div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="line"><span class="cl"><span class="n">scoring_data</span><span class="o">.</span><span class="n">py</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">change_log</span><span class="p">(</span><span class="n">merged_df</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">change_log</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">merged_df</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span>
+</span></span><span class="line"><span class="cl">                                <span class="s1">&#39;Jurisdiction&#39;</span><span class="p">,</span> <span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="s1">&#39;Freshness&#39;</span><span class="p">,</span> <span class="s1">&#39;Firmographic&#39;</span><span class="p">,</span> <span class="s1">&#39;Officer&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">change_log</span> <span class="o">=</span> <span class="n">change_log</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;Jurisdiction&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span>
+</span></span><span class="line"><span class="cl">                                  <span class="s1">&#39;Firmographic&#39;</span><span class="p">,</span> <span class="s1">&#39;Officer&#39;</span><span class="p">,</span> <span class="s1">&#39;Freshness&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">firmographic1</span> <span class="o">=</span> <span class="n">change_log</span><span class="p">[</span><span class="s1">&#39;Firmographic&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">firmographic2</span> <span class="o">=</span> <span class="n">change_log</span><span class="p">[</span><span class="s1">&#39;Firmographic&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">officer1</span> <span class="o">=</span> <span class="n">change_log</span><span class="p">[</span><span class="s1">&#39;Officer&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">officer2</span> <span class="o">=</span> <span class="n">change_log</span><span class="p">[</span><span class="s1">&#39;Officer&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">freshness1</span> <span class="o">=</span> <span class="n">change_log</span><span class="p">[</span><span class="s1">&#39;Freshness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">freshness2</span> <span class="o">=</span> <span class="n">change_log</span><span class="p">[</span><span class="s1">&#39;Freshness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Take the first column in Firmographics and compare it to the second.</span>
+</span></span><span class="line"><span class="cl">    <span class="n">change_log</span><span class="p">[(</span><span class="s1">&#39;No Change&#39;</span><span class="p">,</span> <span class="s1">&#39;Firmographics&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span><span class="n">change_log</span><span class="p">[(</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;Firmographic&#39;</span><span class="p">,</span> <span class="n">firmographic1</span><span class="p">)]</span> <span class="o">==</span> <span class="n">change_log</span><span class="p">[(</span><span class="s1">&#39;Firmographic&#39;</span><span class="p">,</span> <span class="n">firmographic2</span><span class="p">)])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">change_log</span><span class="p">[(</span><span class="s1">&#39;No Change&#39;</span><span class="p">,</span> <span class="s1">&#39;Officer&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">change_log</span><span class="p">[(</span><span class="s1">&#39;Officer&#39;</span><span class="p">,</span> <span class="n">officer1</span><span class="p">)]</span> <span class="o">==</span> <span class="n">change_log</span><span class="p">[(</span><span class="s1">&#39;Officer&#39;</span><span class="p">,</span> <span class="n">officer2</span><span class="p">)])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">change_log</span><span class="p">[(</span><span class="s1">&#39;No Change&#39;</span><span class="p">,</span> <span class="s1">&#39;Freshness&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">change_log</span><span class="p">[(</span><span class="s1">&#39;Freshness&#39;</span><span class="p">,</span> <span class="n">freshness1</span><span class="p">)]</span> <span class="o">==</span> <span class="n">change_log</span><span class="p">[(</span><span class="s1">&#39;Freshness&#39;</span><span class="p">,</span> <span class="n">freshness2</span><span class="p">)])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">change_log</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s1">&#39;./output/change_log/master_change_log.xlsx&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">filter_mask</span> <span class="o">=</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="o">~</span><span class="n">change_log</span><span class="p">[(</span><span class="s2">&#34;No Change&#34;</span><span class="p">,</span> <span class="s2">&#34;Firmographics&#34;</span><span class="p">)]</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl">        <span class="o">~</span><span class="n">change_log</span><span class="p">[(</span><span class="s2">&#34;No Change&#34;</span><span class="p">,</span> <span class="s2">&#34;Officer&#34;</span><span class="p">)]</span> <span class="o">|</span>
+</span></span><span class="line"><span class="cl">        <span class="o">~</span><span class="n">change_log</span><span class="p">[(</span><span class="s2">&#34;No Change&#34;</span><span class="p">,</span> <span class="s2">&#34;Freshness&#34;</span><span class="p">)]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">changes</span> <span class="o">=</span> <span class="n">change_log</span><span class="p">[</span><span class="n">filter_mask</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">changes_cols</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="s1">&#39;Firmographic&#39;</span><span class="p">,</span> <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;Firmographic&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="s1">&#39;Firmographic&#39;</span><span class="p">,</span> <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;Firmographic&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="s1">&#39;Officer&#39;</span><span class="p">,</span> <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;Officer&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="s1">&#39;Officer&#39;</span><span class="p">,</span> <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;Officer&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="s1">&#39;Freshness&#39;</span><span class="p">,</span> <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;Freshness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="s1">&#39;Freshness&#39;</span><span class="p">,</span> <span class="n">changes</span><span class="p">[</span><span class="s1">&#39;Freshness&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">filtered_changes</span> <span class="o">=</span> <span class="n">changes</span><span class="p">[</span><span class="n">changes_cols</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">today_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">filtered_changes</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">filtered_changes</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;./output/change_log/</span><span class="si">{</span><span class="n">today_date</span><span class="si">}</span><span class="s1">_log.xlsx&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No jurisdictions with changes found&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Rows with changes&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">filtered_changes</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;./output/change_log/</span><span class="si">{</span><span class="n">today_date</span><span class="si">}</span><span class="s1">_log.xlsx&#39;</span><span class="p">)</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+    <button
+      class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+      title="Copy code"
+    >
+      <div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4"></div>
+      <div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4"></div>
+    </button>
+  </div>
+</div>
+<p>Once we have booleans to demarkate where there&rsquo;s been a change in value between different months, we save the output to a master_change_log. This file is updated everytime we run the programme and it contains all the months. Each month when we get a new file from our vendor and run the script, the month will be repesented in a column on this log.</p>
+<p>The master_change log is helpful for viewing change overtime, but what if we want a quick update that highligths the latest changes so we can tell the team and key stakeholders?</p>
+<p>To achieve this, we create a mask that lets us filter rows where there&rsquo;s been a change. This narrows our dataframe down to a short table that we save as an Excel file.</p>
+<p>If there&rsquo;s been no changes, that is, if the dataframe is empty, we&rsquo;ll print a statement that says that there&rsquo;s been no changes. However, if there&rsquo;s been a change, we&rsquo;ll save the filtered dataframe with the changes.</p>
+<p>To stay organised, we&rsquo;ll save each change_log with today&rsquo;s date appended to the end.</p>
+<h2>From business problem to solution<span class="absolute -mt-20" id="from-business-problem-to-solution"></span>
+    <a href="#from-business-problem-to-solution" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>I  said earlier that  &lsquo;knowing about updates in our data before that morning coffee with a potential client can be the difference between deal and no deal&rsquo;.</p>
+<p>With this Python programme, I can now update our sales team about changes in our data in less than the time it takes them to finish their coffee.</p>
+
+        </div>
+        <div class="mt-16"></div>
+        
+      </main>
+    </article>
+  </div>
+
+      <footer class="hextra-footer bg-gray-100 pb-[env(safe-area-inset-bottom)] dark:bg-neutral-900 print:bg-transparent"><div class="mx-auto flex gap-2 py-2 px-4 max-w-screen-xl"><button
+  title="Change theme"
+  data-theme="light"
+  class="theme-toggle group h-7 rounded-md px-2 text-left text-xs font-medium text-gray-600 transition-colors dark:text-gray-400 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-primary-100/5 dark:hover:text-gray-50"
+  type="button"
+  aria-label="Change theme"
+>
+  <div class="flex items-center gap-2 capitalize"><svg height=12 class="group-data-[theme=light]:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg><span class="group-data-[theme=light]:hidden">Light</span><svg height=12 class="group-data-[theme=dark]:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg><span class="group-data-[theme=dark]:hidden">Dark</span></div>
+</button>
+</div><hr class="dark:border-neutral-800" /><div
+    class="max-w-screen-xl mx-auto flex justify-center py-12 pl-[max(env(safe-area-inset-left),1.5rem)] pr-[max(env(safe-area-inset-right),1.5rem)] text-gray-600 dark:text-gray-400 md:justify-start"
+  >
+    <div class="flex w-full flex-col items-center sm:items-start"><div class="font-semibold"><a class="flex text-sm items-center gap-1 text-current" target="_blank" rel="noopener noreferrer" title="Hextra GitHub Homepage" href="https://github.com/imfing/hextra">
+    <span>Powered by Hextra<svg height=1em class="inline-block ml-1 align-[-2.5px]" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="m 105.50024,22.224647 c -9.59169,-5.537563 -21.40871,-5.537563 -31.000093,0 L 39.054693,42.689119 C 29.463353,48.226675 23.55484,58.460531 23.55484,69.535642 v 40.928918 c 0,11.07542 5.908513,21.3092 15.499853,26.84652 l 35.445453,20.46446 c 9.591313,5.53732 21.408404,5.53732 31.000094,0 l 35.44507,-20.46446 c 9.59131,-5.53732 15.49985,-15.7711 15.49985,-26.84652 V 69.535642 c 0,-11.075111 -5.90854,-21.308967 -15.49985,-26.846523 z M 34.112797,85.737639 c -1.384445,2.397827 -1.384445,5.352099 0,7.749927 l 24.781554,42.922974 c 1.38437,2.39783 3.942853,3.87496 6.711592,3.87496 h 49.563107 c 2.76905,0 5.3273,-1.47713 6.71144,-3.87496 l 24.78194,-42.922974 c 1.38414,-2.397828 1.38414,-5.3521 0,-7.749927 L 121.88049,42.814746 c -1.38414,-2.397828 -3.94239,-3.874964 -6.71144,-3.874964 H 65.605944 c -2.768739,0 -5.327223,1.477059 -6.711592,3.874964 z" style="stroke-width:0.774993" /></svg></span>
+  </a></div>
+    </div>
+  </div>
+</footer>
+    
+  </body>
+  <script defer src="/js/main.js" integrity=""></script>
+
+
+<script defer src="/lib/flexsearch/flexsearch.bundle.min.0425860527cc9968f9f049421c7a56b39327d475e2e3a8f550416be3a9134327.js" integrity="sha256-BCWGBSfMmWj58ElCHHpWs5Mn1HXi46j1UEFr46kTQyc="></script>
+    <script defer src="/en.search.js" integrity=""></script>
+
+
+</html>
