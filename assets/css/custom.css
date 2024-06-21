@@ -1,0 +1,113 @@
+@font-face {
+  font-family: 'Atlas Grotesk Regular';
+  src: url('AtlasGrotesk-Regular.otf');
+  font-weight: 100;
+  font-style: normal;
+  font-size: 1.06rem;
+  color: rgb(41, 42, 43);
+  -webkit-font-smoothing: antialiased;
+}
+
+div.content a {
+  color: #292a2b;
+}
+
+.main {
+ padding-bottom: 5%;
+}
+
+.content {
+  font-family: "Atlas Grotesk Regular", sans-serif;
+  font-optical-sizing: auto;
+  font-variation-settings: "wdth" 100;
+}
+
+.content p {
+  line-height: 1.65;
+  margin-botton: 1rem;
+  margin-top: 0;
+  box-sizing: border-box;
+  display: box;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  outline: 0;
+  font-size: 1.06rem;
+  word-break: break-word;
+  font-weight: 100;
+  /* https://www.mediavine.com/increase-your-line-height-and-improve-rpm-and-readability/#:~:text=That%20figure%20multiplies%20your%20font,No. */
+
+}
+
+h1 {
+  font-style: normal !important;
+  line-height: 1.2 !important;
+  font-size: 2rem !important;
+  font-weight: 400 !important;
+}
+
+.content h1, .content h2, .content h3 {
+  font-style: normal;
+  line-height: 1.2;
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.iframe {
+  margin-top: 50px;
+  margin-bottom: 50px
+}
+
+.main {
+  max-width: 768px;
+  margin: auto;
+  padding: 1%;
+}
+
+
+.homepage-header {
+  display:  flex;
+  flex-direction: flex-row;
+  height: 500px;
+  justify: center;
+  align-items: center;
+  gap: 5%;
+}
+
+.header-text {
+  width: 50%;
+  font-style: normal;
+  line-height: 1.2;
+  font-size: 1.2rem;
+  font-weight: 400;
+  font-family: "Atlas Grotesk Regular", sans-serif;
+
+}
+
+
+.header-image {
+  width: 50%;
+}
+
+
+@media only screen and (max-width: 750px) {
+  .main {
+    margin: auto;
+    justify: center;
+    items-align: center;
+    padding: 10%;
+  }
+  .homepage-header {
+    display: flex;
+    flex-direction: column;
+    justify: center;
+  }
+  .homepage-header h1  {
+    font-size: 1rem;
+    width: 100%;
+    font-family: "Atlas Grotesk Regular", sans-serif;
+  }
+  .header-image{
+    width: 100%;
+    height: fit;
+  }
+}
