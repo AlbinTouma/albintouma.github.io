@@ -26,7 +26,11 @@ menu:
 params:
    navbar:
     displayTitle: true
-           
+   theme:
+    default: light
+    displayToggle: true
+   pages:
+    width: full
 
 
 markup:
@@ -36,6 +40,3 @@ markup:
   highlight:
     noClasses: false
 
-services:
-  googleAnalytics:
-    ID: G-8GNPBZY23L
