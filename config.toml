@@ -1,0 +1,33 @@
+baseURL = "/"
+title = "My Hugo Site"
+languageCode = "en-us"
+
+[params]
+  # Add any specific parameters here
+  
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+  section = ["HTML", "RSS"]
+
+[mediaTypes]
+  [mediaTypes."text/markdown"]
+    suffixes = ["md", "markdown"]
+  [mediaTypes."image/svg+xml"]
+    suffixes = ["svg"]
+
+[outputFormats]
+  [outputFormats.HTML]
+    mediaTypes = ["text/html"]
+
+[[outputs]]
+  name = "web"
+  [outputs]
+    home = ["HTML", "JSON"]
+    section = ["HTML", "JSON"]
+  [mediaTypes]
+    [mediaTypes."text/markdown"]
+      suffixes = ["md", "markdown"]
+    [mediaTypes."image/svg+xml"]
+      suffixes = ["svg"]
+`` example.md
+
