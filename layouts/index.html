@@ -5,11 +5,13 @@
   <script src="assets/css/custom.css" ref="stylesheet"></script>
   </head>
     <header class="homepage-header">
-      <h1 class="header-text">Analyst for data driven companies</h1>
+      <h1 class="header-text">Analysis for data driven companies</h1>
       <div id="my_dataviz"></div>
     </header>
     <div class="content">
-     <h1 >Insights</h1>
+    
+    {{.Content}}
+
 
     {{ range .Site.RegularPages }}
 
