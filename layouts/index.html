@@ -20,13 +20,26 @@
   <article class="card">
     <header>
       <img src="{{.Params.image}}" alt="blog image"> </img>
+     <div> 
       <a class="" href="{{ .Permalink }}"style="text-decoration: none;">
         <h1>{{.LinkTitle}}  </h1>
-      </a>
+     </a>
+            {{$tags := slice}}
+            {{$tags = $tags | append .Params.tags}}
+ 
+        
+          <li class="tag_list">
+            {{range $tags}}
+              <dd class="tag">{{.}}</dd>
+            {{end}}
+
+          </li>
+      </div>
+
     </header>
     </article>
 
-   {{end}}
+ {{end}}
 
 
   </div>
