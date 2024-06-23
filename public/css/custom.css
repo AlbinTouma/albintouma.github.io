@@ -111,3 +111,38 @@ h1 {
     height: fit;
   }
 }
+
+
+.cards {
+  padding-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  height: fit;
+  width:  700x;
+  justify: center;
+  align-items: center;
+
+}
+
+.card header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+}
+
+.card img {
+  height: auto;
+  width: 300px;
+  object-fit: cover;
+
+}
+
+
+
+
+
+

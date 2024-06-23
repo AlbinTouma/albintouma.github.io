@@ -14,14 +14,24 @@
 
 
     {{ range .Site.RegularPages }}
+ 
+<div class="cards"> 
 
-    <a class="" href="{{ .Permalink }}"style="text-decoration: none;">
-      <h3>{{.LinkTitle}}  </h3>
-    </a>
+  <article class="card">
+    <header>
+      <img src="{{.Params.image}}" alt="blog image"> </img>
+      <a class="" href="{{ .Permalink }}"style="text-decoration: none;">
+        <h1>{{.LinkTitle}}  </h1>
+      </a>
+    </header>
 
-    {{end}}
-    </div>
-  </main>
+  </article>
+
+   {{end}}
+
+
+  </div>
+ </main>
 
 
 <script>

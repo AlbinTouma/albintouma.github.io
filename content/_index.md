@@ -7,24 +7,8 @@ title: "Leveraging data to investigate illicit finance and the business networks
 {{< /cards >}}
 
 
-I'm a data analyst and researcher with +3 years of experience in open source intelligence and anti-money laundering. 
+I'm an analyst and researcher with +3 years of experience in open source intelligence and anti-money laundering. I cover many different topics here ranging from projects I've published to research articles and solutions I've come across through my work. 
 
-
-{{% details title="What is your experience with research?" closed="true" %}}
-
-My experience includes parliamentary work, think tanks, and companies with a focus on compliance and AML regulations.
-
-
-
-
-{{% /details %}}
-
-{{% details title="What is your role as a data analyst" closed="true" %}}
-
-My work as a data analyst takes you from step one to actionable insights. I design research methods, automate processes, merge and clean datasets and make recommendations based on actionable insights in your data. 
-
-
-{{% /details %}}
 
 {{% details title="What is your tech stack?" closed="true" %}}
 
@@ -36,6 +20,25 @@ I'm a hobbyist who learnt to programme through projects. Here are the programmin
 - Javascript
 
 {{% /details %}}
+
+
+{{% details title="How can I reach you?" closed="true" %}}
+
+You can reach me on Linkedin or by email.
+
+{{< cards >}}
+  {{< card link="https://www.linkedin.com/in/albin-touma" title="LinkedIn" >}}
+{{< /cards >}}
+{{< cards >}}
+  {{< card link="mailto:albin.touma@gmail.com" title="albin.touma@gmail.com" >}}
+{{< /cards >}}
+
+
+
+
+{{% /details %}}
+
+
 
 
 <br></br>

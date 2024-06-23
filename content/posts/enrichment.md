@@ -1,6 +1,7 @@
 ---
-title: What are British MPs financial interests? A case study in enriching PEP data
+title: Financial interets of British MPs - a case study in enriching PEP data 
 date: '2023-10-2'
+image: https://dims.apnews.com/dims4/default/65f8aeb/2147483647/strip/true/crop/3000x2000+0+0/resize/1440x960!/format/webp/quality/90/?url=https%3A%2F%2Fstorage.googleapis.com%2Fafs-prod%2Fmedia%2F338de5cc3daa4d4192fb49b95ebc0017%2F3000.jpeg
 draft: false
 ---
 

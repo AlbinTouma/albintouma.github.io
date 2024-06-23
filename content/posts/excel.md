@@ -1,6 +1,7 @@
 ---
 title: Automate Excel with Python
 draft: false
+image: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT50e1KpzDRCpsCsfUNwIPCaJK8qpNMxaXGAw&s
 ---
 
 # Business Problem.
