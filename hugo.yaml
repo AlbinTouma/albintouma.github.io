@@ -22,6 +22,10 @@ menu:
         icon: github
 
 
+services:
+  googleAnalytics:
+    ID: G-6NW353FWZE
+
    
 params:
    navbar:
