@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Albin Touma – Adverse Media</title>
-    <link>http://localhost:1313/tags/adverse-media/</link>
-    <description>Recent content in Adverse Media on Albin Touma</description>
+    <title>Albin Touma – Qualitative Research Design</title>
+    <link>http://localhost:1313/tags/qualitative-research-design/</link>
+    <description>Recent content in Qualitative Research Design on Albin Touma</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	  <atom:link href="http://localhost:1313/tags/adverse-media/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="http://localhost:1313/tags/qualitative-research-design/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -15,11 +15,11 @@
     
     
     <item>
-      <title>Mapping the Media Landscape - A Qualitative Approach to Estimating Globals News Coverage&#34;</title>
-      <link>http://localhost:1313/posts/mappingmedia/</link>
+      <title>Designing qualitative research to estimate coverage in adverse media</title>
+      <link>http://localhost:1313/posts/fuzzy/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/posts/mappingmedia/</guid>
+      <guid>http://localhost:1313/posts/fuzzy/</guid>
       <description>
         
         

@@ -2,7 +2,7 @@
 draft: true
 title: Extracting Iranian entities from sanctions lists
 image: https://cdn.britannica.com/25/93825-050-D1300547/collection-newspapers.jpg
-tags: [Python, Adverse Media, Research Design]
+tags: [python, adverse media]
 ---
 # matplotlib demo
 # 
