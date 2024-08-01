@@ -9,15 +9,13 @@ title: "Leveraging data to investigate illicit finance and the business networks
 
 I'm an analyst and researcher with +3 years of experience in open source intelligence and anti-money laundering. I cover many different topics here ranging from projects I've published to research articles and solutions I've come across through my work. 
 
-
 {{% details title="What is your tech stack?" closed="true" %}}
 
-I'm a hobbyist who learnt to programme through projects. Here are the programming languages that I use most frequently
+I learnt to programme at work and through projects. Here are the programming languages that I use most frequently
 
 - Python
 - SQL
 - Golang
-- Javascript
 
 {{% /details %}}
 

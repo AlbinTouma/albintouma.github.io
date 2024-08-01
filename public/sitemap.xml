@@ -4,13 +4,13 @@
   <url>
     <loc>http://localhost:1313/tags/adverse-media/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/typology/</loc>
-  </url><url>
     <loc>http://localhost:1313/posts/</loc>
   </url><url>
     <loc>http://localhost:1313/posts/excel/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
+  </url><url>
+    <loc>http://localhost:1313/posts/typology/</loc>
   </url><url>
     <loc>http://localhost:1313/tags/enrichment/</loc>
   </url><url>
